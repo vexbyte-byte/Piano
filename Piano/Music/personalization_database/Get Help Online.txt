@@ -1,0 +1,15 @@
+-- use these in future --
+
+midi download link:
+-------------------
+- (Senorita Full) https://www.cprato.com/en/midi/download/352/shawn-mendes-camila-cabello-senorita/NC45NTcxMjM0MDM0NTM0RSsxNg==
+- (Senorita Keys Only) https://onlinesequencer.net/3922934#
+
+attempt get key sound:
+----------------------
+- https://www.apronus.com/music/flashpiano.htm
+- https://www.onlinepianist.com/virtual-piano (turn on Preserve Log)
+
+midi generator:
+---------------
+- onlinesequencer

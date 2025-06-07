@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Theme Changer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem auto;
+      max-width: 400px;
+      background-color: #f0f0f0;
+      color: #222;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .theme-editor {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      gap: 0.75rem 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    label {
+      font-weight: 600;
+    }
+    input[type="color"] {
+      width: 80px;
+      height: 36px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      transition: box-shadow 0.2s ease;
+    }
+    input[type="color"]:focus {
+      outline: none;
+      box-shadow: 0 0 6px 2px #4caf50;
+    }
+    .buttons {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 0 0.4rem;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .preview-box {
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: white;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-weight: 600;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Theme Changer</h2>
+  <div class="theme-editor">
+    <label for="white_key">White Key:</label>
+    <input type="color" id="white_key" value="#ffffff" title="White key color" />
+    
+    <label for="black_key">Black Key:</label>
+    <input type="color" id="black_key" value="#000000" title="Black key color" />
+    
+    <label for="highlight_white">Highlight White:</label>
+    <input type="color" id="highlight_white" value="#ffff99" title="Highlight white keys" />
+    
+    <label for="highlight_black">Highlight Black:</label>
+    <input type="color" id="highlight_black" value="#444444" title="Highlight black keys" />
+    
+    <label for="background">Background:</label>
+    <input type="color" id="background" value="#f0f0f0" title="Background color" />
+  </div>
+
+  <div class="buttons">
+    <button onclick="saveTheme()">Save Theme (Console)</button>
+    <button onclick="copyThemeJSON()">Copy JSON</button>
+    <button onclick="resetDefaults()">Reset Defaults</button>
+  </div>
+
+  <div class="preview-box" id="previewBox">
+    Background preview area
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll('input[type="color"]');
+    const previewBox = document.getElementById('previewBox');
+
+    function updatePreview() {
+      const bgColor = document.getElementById('background').value;
+      previewBox.style.backgroundColor = bgColor;
+      previewBox.style.color = getContrastYIQ(bgColor);
+    }
+
+    function saveTheme() {
+      const theme = getThemeValues();
+      console.log("Theme JSON:\n" + JSON.stringify(theme, null, 2));
+      alert("Theme saved! Check the console for JSON output.");
+    }
+
+    function copyThemeJSON() {
+      const theme = getThemeValues();
+      const json = JSON.stringify(theme, null, 2);
+      navigator.clipboard.writeText(json).then(() => {
+        alert("Theme JSON copied to clipboard!");
+      });
+    }
+
+    function resetDefaults() {
+      document.getElementById('white_key').value = "#ffffff";
+      document.getElementById('black_key').value = "#000000";
+      document.getElementById('highlight_white').value = "#ffff99";
+      document.getElementById('highlight_black').value = "#444444";
+      document.getElementById('background').value = "#f0f0f0";
+      updatePreview();
+    }
+
+    function getThemeValues() {
+      return {
+        white_key: document.getElementById("white_key").value,
+        black_key: document.getElementById("black_key").value,
+        highlight_white: document.getElementById("highlight_white").value,
+        highlight_black: document.getElementById("highlight_black").value,
+        background: document.getElementById("background").value
+      };
+    }
+
+    // Simple contrast helper to switch text color for preview readability
+    function getContrastYIQ(hexcolor) {
+      hexcolor = hexcolor.replace("#", "");
+      const r = parseInt(hexcolor.substr(0,2),16);
+      const g = parseInt(hexcolor.substr(2,2),16);
+      const b = parseInt(hexcolor.substr(4,2),16);
+      const yiq = ((r*299)+(g*587)+(b*114))/1000;
+      return (yiq >= 128) ? "#000" : "#fff";
+    }
+
+    inputs.forEach(input => input.addEventListener('input', updatePreview));
+
+    // Initialize preview on page load
+    updatePreview();
+  </script>
+</body>
+</html>

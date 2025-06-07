@@ -1,0 +1,23 @@
+{
+    "default": {
+        "white_key": "white",
+        "black_key": "black",
+        "highlight_white": "light yellow",
+        "highlight_black": "gray20",
+        "background": "#f0f0f0"
+    },
+    "night_mode": {
+        "white_key": "#333333",
+        "black_key": "#000000",
+        "highlight_white": "#999933",
+        "highlight_black": "#666600",
+        "background": "#111111"
+    },
+    "new_theme": {
+        "white_key": "#ffffff",
+        "black_key": "#000000",
+        "highlight_white": "#80ff00",
+        "highlight_black": "#444444",
+        "background": "#f0f0f0"
+    }
+}
